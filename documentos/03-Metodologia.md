@@ -28,6 +28,11 @@ Para organizar as tarefas é realizar a distribuição das mesmas nossa equipe e
 - Doing: Quando uma tarefa tiver sido iniciada, ela é movida para cá. 
 - Done: nesta lista são colocadas as tarefas que passaram pelos testes e controle de qualidade e estão prontos para ser entregues ao usuário. Não há mais edições ou revisões necessárias, ele está agendado e pronto para a ação.
 
+
+
+O quadro kanban do grupo no GitHub está disponível no link: https://github.com/orgs/ICEI-PUC-Minas-PMV-ADS/projects/2420/views/1 
+
+
 ![Imagem do WhatsApp de 2025-09-28 à(s) 21 27 12_c6a872f3](https://github.com/user-attachments/assets/782c4d5c-be2a-4040-a2e8-71be9de4faee)
 
 
