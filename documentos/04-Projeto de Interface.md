@@ -3,33 +3,53 @@
 
 ## User Flow
 
-Fluxo de usuário (User Flow) é uma técnica que permite ao desenvolvedor mapear todo fluxo de navegação do usuário na aplicação. Essa técnica funciona para alinhar os caminhos e as possíveis ações que o usuário pode fazer junto com os membros de sua equipe.
+O fluxograma apresentado na figura 1 mostra o fluxo de interação do usuário pelas telas do sistema. Cada uma das telas deste fluxo é detalhada na seção de Protótipo de baixa fidelidade que se segue. Para visualizar o protótipo interativo, acesse o:
+[figma](https://www.figma.com/design/QWHHocQ4LCPi8DVwVg7Qfj/Alerta-Cidadao?node-id=0-1&t=o6KcNZel4cGQwlCn-1 ).
 
-[Adicione aqui o diagrama de fluxo de usuário da sua aplicação.] 
 
-> **Links Úteis**:
-> - [User Flow: O Quê É e Como Fazer?](https://medium.com/7bits/fluxo-de-usu%C3%A1rio-user-flow-o-que-%C3%A9-como-fazer-79d965872534)
-> - [User Flow vs Site Maps](http://designr.com.br/sitemap-e-user-flow-quais-as-diferencas-e-quando-usar-cada-um/)
-> - [Top 25 User Flow Tools & Templates for Smooth](https://www.mockplus.com/blog/post/user-flow-tools)
+<img width="1600" height="1100" alt="fluxograma_alerta_cidadao" src="https://github.com/user-attachments/assets/cbe8ccad-b7e8-4887-8f19-c2142df89b31" />
 
-## Protótipo
 
-Desenvolver um protótipo emerge como uma das maneiras mais ágeis e econômicas de validar uma ideia, conceito ou funcionalidade. Isso permite a interação, avaliação, modificação e aprovação das principais características de uma interface antes de entrar na fase de desenvolvimento. Leia o artigo [Protótipos: baixa, média ou alta fidelidade?](https://medium.com/ladies-that-ux-br/prot%C3%B3tipos-baixa-m%C3%A9dia-ou-alta-fidelidade-71d897559135).
+
 
 ### Protótipo de baixa fidelidade
 
-Protótipos de baixa fidelidade apresentam de forma simplificada o design da interface e o relacionamento entre suas páginas, permitindo evolução da proposta da solução. Neste projeto, os utilizaremos para apoiar a validação dos requisitos e efetuar mudanças dos mesmos, caso seja necessário, para menor impacto na codificação da aplicação.
+Protótipos de baixa fidelidade apresentam de forma simplificada o design da interface e o relacionamento entre suas páginas, permitindo evolução da proposta da solução. 
 
-[Elabore as principais interfaces gráficas da aplicação de modo que os requisitos funcionais sejam contemplados nas telas propostas.]
+Cabeçalho - local onde estão dispostos o nome da aplicação web e navegação principal do site (menu da aplicação);
+Conteúdo - apresenta o conteúdo da tela em questão;
+Rodapé - apresenta informações sobre os direitos autorais.
 
-[Adicione aqui as telas da sua aplicação com seus devidos títulos.] 
+<img width="667" height="324" alt="image" src="https://github.com/user-attachments/assets/b5bbe736-703f-49c1-bf8a-84772b8bf227" />
+
+
  
-> **Links Úteis**:
-> - [Protótipos vs Wireframes](https://www.nngroup.com/videos/prototypes-vs-wireframes-ux-projects/)
->- Ferramentas:
->> - [Pencil](https://pencil.evolus.vn/)
->> - [MarvelApp](https://marvelapp.com/)
->> - [Figma](https://www.figma.com/)
+ ## Tela - Home page
+Apresenta o usuario ao produto, alem de exibir as ferramentas no cabeçalho 
+
+![Imagem do WhatsApp de 2025-09-28 à(s) 23 51 05_842f0ce2](https://github.com/user-attachments/assets/9abfb302-dc74-4265-a5a5-a29062924cb6)
+
+
+
+## Tela- Cadastro 
+A tela de cadastro apresenta os seguintes campos para a inserção das informações pessoais do usuário: Nome Completo, E-mail, cpf é senha
+
+![Imagem do WhatsApp de 2025-09-28 à(s) 23 51 06_415739c9](https://github.com/user-attachments/assets/3b207a19-6b3c-4328-9a2f-efcc3f486983)
+
+
+## Tela- Login
+A tela de Login apresenta campos para a inserção do e-mail e da senha, e a funcionalidade de manter-se logado.
+
+
+![Imagem do WhatsApp de 2025-09-28 à(s) 23 51 05_27d02f9d](https://github.com/user-attachments/assets/f91ca7e8-80e1-4d3e-a895-f0a421cf7ac6)
+
+
+
+## Tela de Alerta 
+Demonstra quais alertas foram emitidos na região selecionada 
+
+![Imagem do WhatsApp de 2025-09-28 à(s) 23 51 06_b2a5e12b](https://github.com/user-attachments/assets/37a0283c-a47a-42c4-9278-2c893d722de9)
+
 
 
 
