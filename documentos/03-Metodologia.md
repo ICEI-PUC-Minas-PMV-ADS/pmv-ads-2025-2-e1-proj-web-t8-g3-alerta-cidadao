@@ -14,7 +14,7 @@ Desta forma, a equipe está organizada da seguinte maneira:
 
 - Scrum Master: Lucas Lanham
 - Product Owner: Eduardo Nunes
-- Equipe de Desenvolvimento: Wellington, Isabella 
+- Equipe de Desenvolvimento: Wellington 
 - Equipe de Design: Ramom
 
 
