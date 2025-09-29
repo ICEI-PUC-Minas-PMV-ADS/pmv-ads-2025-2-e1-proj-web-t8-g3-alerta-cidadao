@@ -71,6 +71,7 @@ Os artefatos do projeto são desenvolvidos a partir de diversas plataformas e a 
 
 ### Estratégia de Organização de Codificação 
 
-Todos os artefatos relacionados a implementação e visualização dos conteúdos do projeto da aplicação foram inseridos na pasta [codigo-fonte].
+Todos os artefatos relacionados a implementação e visualização dos conteúdos do projeto da aplicação foram inseridos na pasta [codico-fonte](https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t8-g3-alerta-cidadao/tree/main/codigo-fonte/).
+
 
 
