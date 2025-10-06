@@ -64,7 +64,7 @@ Os artefatos do projeto são desenvolvidos a partir de diversas plataformas e a 
 | AMBIENTE                            | PLATAFORMA                         | LINK DE ACESSO                         |
 |-------------------------------------|------------------------------------|----------------------------------------|
 | Repositório de código fonte         | GitHub                             | https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t8-g3-alerta-cidadao/blob/main/README.md                           |
-| Documentos do projeto               | GitHub                             | http://https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t8-g3-alerta-cidadao/blob/main                            |
+| Documentos do projeto               | GitHub                             | https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t8-g3-alerta-cidadao/blob/main                            |
 | Projeto de Interface                | Figma                              | https://www.figma.com/design/QWHHocQ4LCPi8DVwVg7Qfj/Alerta-Cidadao?node-id=0-1&t=o6KcNZel4cGQwlCn-1                             |
 | Gerenciamento do Projeto            | GitHub Projects                    | https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t8-g3-alerta-cidadao/tree/main                           |
 | Hospedagem                          | GitHub Pages                       | http://....                            |
