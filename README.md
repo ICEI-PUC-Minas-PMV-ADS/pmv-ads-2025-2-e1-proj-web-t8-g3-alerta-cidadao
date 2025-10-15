@@ -10,15 +10,14 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto desenvolvido.
 
 ## Integrantes
 
-* Eduardo Nunes Moreira
-* Isabella Teixeira Albuquerque
-* Lucas Rodrigues Teixeira Lanham
-* Ramon Costa Alonso
-* Wellington Eustáquio Gregorio Junior
+- Eduardo Nunes Moreira
+- Lucas Rodrigues Teixeira Lanham
+- Ramon Costa Alonso
+- Wellington Eustáquio Gregorio Junior
 
 ## Orientador
 
-* Luiz Alberto Ferreira Gomes
+- Luiz Alberto Ferreira Gomes
 
 # Documentação
 
@@ -36,12 +35,12 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto desenvolvido.
 
 # Hospedagem
 
-* Insira o endereço eletrônico público de acesso ao conteúdo publicado. 
+- Insira o endereço eletrônico público de acesso ao conteúdo publicado.
 
 # Código-Fonte
 
-* <a href="codigo-fonte/README.md">Código Fonte</a>
+- <a href="codigo-fonte/README.md">Código Fonte</a>
 
 # Apresentação
 
-* <a href="apresentacao/README.md">Apresentação do Projeto</a>
+- <a href="apresentacao/README.md">Apresentação do Projeto</a>
