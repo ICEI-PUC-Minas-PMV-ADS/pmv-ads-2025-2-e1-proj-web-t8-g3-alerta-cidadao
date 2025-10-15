@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { validateEmail } from './utils/validateEmail';
-import { formatCPF } from './utils/formatCPF';
+import { validateEmail } from 'utils/validateEmail';
+import { formatCPF } from 'utils/formatCPF';
 
 export default function AuthScreens() {
   const [mode, setMode] = useState('signup');
