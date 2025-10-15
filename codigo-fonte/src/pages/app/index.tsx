@@ -1,7 +1,6 @@
+import AuthScreens from 'pages/auth';
+import HomePage from 'pages/home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import HomePage from './pages/home';
-import AuthScreens from './pages/auth';
 
 export default function App() {
   return (
