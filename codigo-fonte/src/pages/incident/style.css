@@ -1,0 +1,12 @@
+.container {
+  max-width: 650px;
+  padding: 10px 20px;
+  margin: 0 auto;
+}
+
+.incident-image {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}

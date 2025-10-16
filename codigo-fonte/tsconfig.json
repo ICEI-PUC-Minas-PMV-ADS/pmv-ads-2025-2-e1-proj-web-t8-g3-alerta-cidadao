@@ -20,7 +20,8 @@
       "pages/*": ["pages/*"],
       "components/*": ["components/*"],
       "hooks/*": ["hooks/*"],
-      "utils/*": ["utils/*"]
+      "utils/*": ["utils/*"],
+      "common/*": ["common/*"]
     }
   },
   "include": ["src"],
