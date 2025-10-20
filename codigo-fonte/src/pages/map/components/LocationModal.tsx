@@ -68,7 +68,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
             <MapPin className="w-6 h-6 text-blue-600" />
-            Adicionar Novo Incidencia
+            Adicionar Novo Incidente
           </h2>
           <button
             onClick={onClose}
