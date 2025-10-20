@@ -12,9 +12,9 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="incident/:id" element={<IncidentPage />} />
+          <Route path="/map" element={<MapComponent />} />
+          <Route path="/auth" element={<AuthScreens />} />
         </Route>
-        <Route path="/auth" element={<AuthScreens />} />
-        <Route path="/map" element={<MapComponent />} />
       </Routes>
     </BrowserRouter>
   );
