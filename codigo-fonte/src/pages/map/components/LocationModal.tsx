@@ -19,6 +19,7 @@ interface FormData {
   telefone: string;
   email: string;
   descricao: string;
+  titulo: string;
 }
 
 const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPosition }) => {
@@ -28,7 +29,8 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
     nome: '',
     telefone: '',
     email: '',
-    descricao: ''
+    descricao: '',
+    titulo: ''
   });
 
   useEffect(() => {
@@ -39,7 +41,8 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
         nome: '',
         telefone: '',
         email: '',
-        descricao: ''
+        descricao: '',
+        titulo: ''
       });
     }
   }, [isOpen, markerPosition]);
@@ -159,6 +162,22 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
               onChange={handleInputChange}
               required
               placeholder="seu@email.com"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+            />
+          </div>
+
+          {/* Titulo */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              <MessageSquare className="w-4 h-4 inline mr-1" />
+              Título do Local
+            </label>
+            <input
+              type="text"
+              name="titulo"
+              value={formData.titulo}
+              onChange={handleInputChange}
+              placeholder="Digite o título do local..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
             />
           </div>
