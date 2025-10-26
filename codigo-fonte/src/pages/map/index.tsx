@@ -11,7 +11,7 @@ interface MarkerPosition {
 
 const MapComponent: React.FC = () => {
   const { location, error, loading } = useGeoLocation();
-  const GOOGLE_MAPS_API_KEY: string = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
+  const GOOGLE_MAPS_API_KEY: string = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyB7YczKVyJ7XeL0csncpSRqnhLrmtiGEFM';
 
   const containerStyle: React.CSSProperties = {
     width: '100%',
