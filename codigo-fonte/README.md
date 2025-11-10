@@ -9,7 +9,17 @@ Nesse primeiro eixo do curso, para simplificar a utilização do Git e a organiz
 
 ## Instalação do Site
 
-O site em HTML/CSS/JS é um projeto estático. É necessário implantá-lo em um servidor web de sua preferência. Existem diversos servidores web gratuitos que podem ser utilizados, tal como GitHub Pages (GitHub.IO), Vercel, Render, Netlify, Surge.sh, entre outros. Nesse primeiro eixo, recomenda-se inclusive a utilização do GitHub Pages. [Insira o endereço eletrônico público para acessá-lo.] 
+Para instalar e executar o Alerta Cidadão em um ambiente de desenvolvimento local, siga os passos abaixo no terminal:
+
+1. Clone o repositório do projeto: <br> ```git clone https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t8-g3-alerta-cidadao.git```
+3. Acesse o diretório do código-fonte: <br> ```cd pmv-ads-2025-2-e1-proj-web-t8-g3-alerta-cidadao/codigo-fonte```
+4. Instale as dependências do projeto: <br> ```yarn``` ou, se estiver utilizando npm: ```npm install```
+5. Inicie o servidor de desenvolvimento: <br> ```yarn dev``` ou, se estiver utilizando npm: ```npm run dev```
+6. Após a inicialização, abra o endereço abaixo no navegador para visualizar o site: <br> [http://localhost:5173/](http://localhost:5173/) 
+
+Caso prefira, você também pode acessar a versão hospedada do projeto diretamente pelo link abaixo: 
+[Alerta Cidadão - Acesso Público](https://alerta-cidadao-g3.vercel.app/)
+
 
 ## Histórico de versões
 
