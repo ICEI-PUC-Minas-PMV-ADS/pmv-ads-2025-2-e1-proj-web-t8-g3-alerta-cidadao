@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { X, MapPin, User, Phone, Mail, MessageSquare } from 'lucide-react';
+import { X, MapPin, User, Phone, Mail, MessageSquare, MapPinned } from 'lucide-react';
 
 interface MarkerPosition {
   lat: number;
   lng: number;
 }
 
+interface Address {
+  rua: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  formatted: string;
+}
+
 interface LocationModalProps {
   isOpen: boolean;
   onClose: () => void;
   markerPosition: MarkerPosition;
+  address: Address | null;
 }
 
 interface FormData {
   latitude: string;
   longitude: string;
+  rua: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
   nome: string;
   telefone: string;
   email: string;
@@ -22,10 +35,14 @@ interface FormData {
   titulo: string;
 }
 
-const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPosition }) => {
+const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPosition, address }) => {
   const [formData, setFormData] = useState<FormData>({
     latitude: '',
     longitude: '',
+    rua: '',
+    bairro: '',
+    cidade: '',
+    estado: '',
     nome: '',
     telefone: '',
     email: '',
@@ -38,6 +55,10 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
       setFormData({
         latitude: markerPosition.lat.toFixed(6),
         longitude: markerPosition.lng.toFixed(6),
+        rua: address?.rua || '',
+        bairro: address?.bairro || '',
+        cidade: address?.cidade || '',
+        estado: address?.estado || '',
         nome: '',
         telefone: '',
         email: '',
@@ -45,7 +66,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
         titulo: ''
       });
     }
-  }, [isOpen, markerPosition]);
+  }, [isOpen, markerPosition, address]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -115,6 +136,76 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
             </div>
           </div>
 
+          {/* Seção de Endereço */}
+          <div className="border-t pt-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <MapPinned className="w-5 h-5 text-blue-600" />
+              Endereço do Incidente
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Rua */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Rua
+                </label>
+                <input
+                  type="text"
+                  name="rua"
+                  value={formData.rua}
+                  onChange={handleInputChange}
+                  placeholder="Rua não identificada"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+
+              {/* Bairro */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Bairro
+                </label>
+                <input
+                  type="text"
+                  name="bairro"
+                  value={formData.bairro}
+                  onChange={handleInputChange}
+                  placeholder="Bairro não identificado"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+
+              {/* Cidade */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Cidade
+                </label>
+                <input
+                  type="text"
+                  name="cidade"
+                  value={formData.cidade}
+                  onChange={handleInputChange}
+                  placeholder="Cidade não identificada"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+
+              {/* Estado */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Estado
+                </label>
+                <input
+                  type="text"
+                  name="estado"
+                  value={formData.estado}
+                  onChange={handleInputChange}
+                  placeholder="Estado não identificado"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Nome */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -170,14 +261,14 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <MessageSquare className="w-4 h-4 inline mr-1" />
-              Título do Local
+              Título do Incidente
             </label>
             <input
               type="text"
               name="titulo"
               value={formData.titulo}
               onChange={handleInputChange}
-              placeholder="Digite o título do local..."
+              placeholder="Digite o título do incidente..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
             />
           </div>
@@ -186,14 +277,14 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <MessageSquare className="w-4 h-4 inline mr-1" />
-              Descrição do Local
+              Descrição do Incidente
             </label>
             <textarea
               name="descricao"
               value={formData.descricao}
               onChange={handleInputChange}
               rows={4}
-              placeholder="Descreva o local ou adicione observações..."
+              placeholder="Descreva o incidente ou adicione observações..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
             />
           </div>
@@ -211,7 +302,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
               type="submit"
               className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-lg hover:shadow-xl"
             >
-              Salvar Local
+              Salvar Incidente
             </button>
           </div>
         </form>

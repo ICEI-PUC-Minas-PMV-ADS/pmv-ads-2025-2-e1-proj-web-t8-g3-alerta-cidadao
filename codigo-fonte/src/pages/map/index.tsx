@@ -9,6 +9,14 @@ interface MarkerPosition {
   lng: number;
 }
 
+interface Address {
+  rua: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  formatted: string;
+}
+
 const MapComponent: React.FC = () => {
   const { location, error, loading } = useGeoLocation();
   const GOOGLE_MAPS_API_KEY: string = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyB7YczKVyJ7XeL0csncpSRqnhLrmtiGEFM';
@@ -27,6 +35,52 @@ const MapComponent: React.FC = () => {
   const [markerPosition, setMarkerPosition] = useState<MarkerPosition>(defaultCenter);
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [address, setAddress] = useState<Address | null>(null);
+  const [loadingAddress, setLoadingAddress] = useState(false);
+
+  // Função para fazer Geocoding Reverso
+  const getAddressFromCoordinates = async (lat: number, lng: number) => {
+    setLoadingAddress(true);
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}&language=pt-BR`
+      );
+      const data = await response.json();
+
+      if (data.status === 'OK' && data.results[0]) {
+        const result = data.results[0];
+        const addressComponents = result.address_components;
+
+        // Extrair componentes do endereço
+        const rua = addressComponents.find((c: any) => 
+          c.types.includes('route'))?.long_name || '';
+        
+        const bairro = addressComponents.find((c: any) => 
+          c.types.includes('sublocality') || c.types.includes('neighborhood'))?.long_name || '';
+        
+        const cidade = addressComponents.find((c: any) => 
+          c.types.includes('administrative_area_level_2'))?.long_name || '';
+        
+        const estado = addressComponents.find((c: any) => 
+          c.types.includes('administrative_area_level_1'))?.short_name || '';
+
+        setAddress({
+          rua,
+          bairro,
+          cidade,
+          estado,
+          formatted: result.formatted_address
+        });
+      } else {
+        setAddress(null);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar endereço:', error);
+      setAddress(null);
+    } finally {
+      setLoadingAddress(false);
+    }
+  };
 
   useEffect(() => {
     if (location) {
@@ -42,6 +96,13 @@ const MapComponent: React.FC = () => {
       }
     }
   }, [location, mapInstance]);
+
+  // Buscar endereço quando a posição do marcador mudar
+  useEffect(() => {
+    if (markerPosition) {
+      getAddressFromCoordinates(markerPosition.lat, markerPosition.lng);
+    }
+  }, [markerPosition]);
 
   const handleMapClick = useCallback((event: google.maps.MapMouseEvent): void => {
     if (event.latLng) {
@@ -119,6 +180,22 @@ const MapComponent: React.FC = () => {
                 Lat: {markerPosition.lat.toFixed(6)}° | 
                 Lng: {markerPosition.lng.toFixed(6)}°
               </p>
+              
+              {loadingAddress && (
+                <p className="mt-2 text-blue-600 animate-pulse">
+                  🔄 Buscando endereço...
+                </p>
+              )}
+              
+              {address && !loadingAddress && (
+                <div className="mt-3 p-3 bg-white rounded border border-gray-300">
+                  <p className="font-semibold text-gray-800 mb-1">📍 Endereço:</p>
+                  {address.rua && <p><strong>Rua:</strong> {address.rua}</p>}
+                  {address.bairro && <p><strong>Bairro:</strong> {address.bairro}</p>}
+                  {address.cidade && <p><strong>Cidade:</strong> {address.cidade}</p>}
+                  {address.estado && <p><strong>Estado:</strong> {address.estado}</p>}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -162,6 +239,7 @@ const MapComponent: React.FC = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         markerPosition={markerPosition}
+        address={address}
       />
     </div>
   );
