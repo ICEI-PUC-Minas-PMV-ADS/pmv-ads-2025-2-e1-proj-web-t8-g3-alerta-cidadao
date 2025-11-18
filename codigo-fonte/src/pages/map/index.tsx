@@ -175,12 +175,6 @@ const MapComponent: React.FC = () => {
           
           {markerPosition && (
             <div className="mt-2 text-sm text-gray-600">
-              <p className="font-semibold">Posição do marcador:</p>
-              <p className="font-mono">
-                Lat: {markerPosition.lat.toFixed(6)}° | 
-                Lng: {markerPosition.lng.toFixed(6)}°
-              </p>
-              
               {loadingAddress && (
                 <p className="mt-2 text-blue-600 animate-pulse">
                   🔄 Buscando endereço...

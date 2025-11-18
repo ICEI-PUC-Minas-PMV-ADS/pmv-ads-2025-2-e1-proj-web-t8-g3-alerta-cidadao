@@ -9,11 +9,11 @@ const FloatingButton: React.FC<FloatingButtonProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="absolute bottom-7 left-7 bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg transition-all duration-200 hover:scale-110 flex items-center gap-2 group"
+      className="absolute bottom-7 left-7 bg-blue-600 text-white rounded-full p-4 shadow-lg flex items-center gap-2"
       title="Adicionar Incidente"
     >
       <Plus className="w-6 h-6" />
-      <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap">
+      <span className="whitespace-nowrap">
         Adicionar Incidente
       </span>
     </button>
