@@ -1,45 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { validateEmail } from "utils/validateEmail";
+import { formatCPF } from "utils/formatCPF";
 
-import { validateEmail } from 'utils/validateEmail';
-import { formatCPF } from 'utils/formatCPF';
+import { registerUser, loginUser } from "utils/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthScreens() {
-  const [mode, setMode] = useState('signup');
-  const [cpf, setCpf] = useState('');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const [mode, setMode] = useState<"signup" | "login">("signup");
 
-  // --- Formatar CPF ---
-  const handleCpfChange = (cpf: string) => {
-    setCpf(formatCPF(cpf));
+  // CAMPOS
+  const [cpf, setCpf] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [senha, setSenha] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const navigate = useNavigate();
+
+  // --- Format CPF ---
+  const handleCpfChange = (value: string) => {
+    setCpf(formatCPF(value));
   };
 
-  // --- Valida e-mail ---
-  const handleEmailChange = (email: string) => {
-    setEmail(email);
-
-    setEmailError(validateEmail(email));
+  // --- Validate Email ---
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    setEmailError(validateEmail(value));
   };
 
-  // ---  Envia o formulário ---
+  // --- SUBMIT FORM ---
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (mode === 'signup') {
-      if (!emailError) {
-        setSuccessMsg(
-          'Cadastro realizado com sucesso! Você será redirecionado para a área de login...',
-        );
-        setTimeout(() => {
-          setMode('login');
-          setSuccessMsg('');
-        }, 3000);
-      } else {
-        alert('Corrija os campos antes de continuar.');
+    // ---------- CADASTRO ----------
+    if (mode === "signup") {
+      if (emailError) {
+        return alert("Corrija os campos destacados antes de continuar.");
       }
-    } else {
-      alert('Login efetuado com sucesso!');
+
+      try {
+        registerUser({
+          name,
+          email,
+          cpf,
+          password: senha,
+        });
+
+        setSuccessMsg("Cadastro realizado com sucesso! Redirecionando...");
+        setTimeout(() => {
+          setMode("login");
+          setSuccessMsg("");
+        }, 1500);
+      } catch (err: any) {
+        alert(err.message);
+      }
+      return;
+    }
+
+    // ---------- LOGIN ----------
+    if (mode === "login") {
+      const user = loginUser(email, senha);
+      if (!user) {
+        return alert("Email ou senha incorretos.");
+      }
+
+      navigate("/"); // 🔥 redireciona para Home
     }
   };
 
@@ -49,10 +75,10 @@ export default function AuthScreens() {
         <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-4 ring-[#0ea5e9] -z-10" />
 
         <h1 className="text-4xl font-extrabold text-black text-center mb-8">
-          {mode === 'signup' ? 'Cadastro' : 'Login'}
+          {mode === "signup" ? "Cadastro" : "Login"}
         </h1>
 
-        {/* Mensagem de sucesso */}
+        {/* Sucesso */}
         {successMsg && (
           <div className="mb-5 p-3 rounded-lg text-center text-green-800 bg-green-100 border border-green-400">
             {successMsg}
@@ -60,7 +86,8 @@ export default function AuthScreens() {
         )}
 
         <form onSubmit={handleSubmit}>
-          {mode === 'signup' && (
+          {/* CAMPOS ESPECÍFICOS DO CADASTRO */}
+          {mode === "signup" && (
             <>
               <input
                 name="cpf"
@@ -68,49 +95,53 @@ export default function AuthScreens() {
                 onChange={(e) => handleCpfChange(e.target.value)}
                 placeholder="Seu CPF"
                 maxLength={14}
-                className="w-full mb-5 px-5 py-3 rounded-full border-2 border-[#3b0a8a] placeholder:text-[#bcbcd2] focus:outline-none focus:border-[#5b21b6] focus:ring-2 focus:ring-[#5b21b6]/20"
+                className="w-full mb-5 px-5 py-3 rounded-full border-2 border-[#3b0a8a] placeholder:text-[#bcbcd2] focus:outline-none"
                 required
               />
 
               <input
                 name="nome"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 placeholder="Seu nome completo"
-                className="w-full mb-5 px-5 py-3 rounded-full border-2 border-[#3b0a8a] placeholder:text-[#bcbcd2] focus:outline-none focus:border-[#5b21b6] focus:ring-2 focus:ring-[#5b21b6]/20"
+                className="w-full mb-5 px-5 py-3 rounded-full border-2 border-[#3b0a8a] placeholder:text-[#bcbcd2] focus:outline-none"
                 required
               />
             </>
           )}
 
+          {/* EMAIL */}
           <input
             name="email"
             type="email"
             value={email}
-            onChange={(e) => {
-              handleEmailChange(e.target.value);
-            }}
+            onChange={(e) => handleEmailChange(e.target.value)}
             placeholder="Seu e-mail"
             className={`w-full mb-2 px-5 py-3 rounded-full border-2 ${
               emailError
-                ? 'border-red-500 focus:ring-red-400'
-                : 'border-[#3b0a8a] focus:border-[#5b21b6] focus:ring-[#5b21b6]/20'
+                ? "border-red-500 focus:ring-red-400"
+                : "border-[#3b0a8a] focus:border-[#5b21b6]"
             } placeholder:text-[#bcbcd2] outline-none focus:ring-2`}
             required
           />
+
           {emailError && (
-            <p className="text-red-500 text-sm mb-3 text-center">
-              {emailError}
-            </p>
+            <p className="text-red-500 text-sm mb-3 text-center">{emailError}</p>
           )}
 
+          {/* SENHA */}
           <input
             name="senha"
             type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
             placeholder="Sua senha"
-            className="w-full mb-5 px-5 py-3 rounded-full border-2 border-[#3b0a8a] placeholder:text-[#bcbcd2] focus:outline-none focus:border-[#5b21b6] focus:ring-2 focus:ring-[#5b21b6]/20"
+            className="w-full mb-5 px-5 py-3 rounded-full border-2 border-[#3b0a8a] placeholder:text-[#bcbcd2]"
             required
           />
 
-          {mode === 'signup' ? (
+          {/* Termos / Mantenha-me logado */}
+          {mode === "signup" ? (
             <label className="flex items-start gap-3 text-sm text-black/80 select-none mb-5">
               <input
                 type="checkbox"
@@ -118,10 +149,7 @@ export default function AuthScreens() {
                 className="mt-1 size-4 rounded border border-gray-300 accent-pink-500"
                 required
               />
-              Concordo que li e aceito os{' '}
-              <a href="#" className="underline">
-                termos
-              </a>
+              Aceito os <a className="underline">termos</a>
             </label>
           ) : (
             <label className="flex items-start gap-3 text-sm text-black/80 select-none mb-5">
@@ -134,21 +162,22 @@ export default function AuthScreens() {
             </label>
           )}
 
+          {/* BOTÃO */}
           <button
             type="submit"
-            disabled={!!successMsg} // impede reenvio enquanto mostra sucesso
-            className="w-full h-12 rounded-full bg-[#ffd000] hover:bg-[#ffcd00]/90 active:translate-y-[1px] transition font-semibold text-black"
+            disabled={!!successMsg}
+            className="w-full h-12 rounded-full bg-[#ffd000] hover:bg-[#ffcd00]/90 transition font-semibold text-black"
           >
-            {mode === 'signup' ? 'Cadastre-se' : 'Acesse sua conta'}
+            {mode === "signup" ? "Cadastre-se" : "Acesse sua conta"}
           </button>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            {mode === 'signup' ? (
+            {mode === "signup" ? (
               <>
-                Já possui conta?{' '}
+                Já possui conta?{" "}
                 <button
                   type="button"
-                  onClick={() => setMode('login')}
+                  onClick={() => setMode("login")}
                   className="text-[#ef476f] underline"
                 >
                   Fazer login
@@ -156,10 +185,10 @@ export default function AuthScreens() {
               </>
             ) : (
               <>
-                Não tem uma conta?{' '}
+                Não tem uma conta?{" "}
                 <button
                   type="button"
-                  onClick={() => setMode('signup')}
+                  onClick={() => setMode("signup")}
                   className="text-[#ef476f] underline"
                 >
                   Cadastre-se
