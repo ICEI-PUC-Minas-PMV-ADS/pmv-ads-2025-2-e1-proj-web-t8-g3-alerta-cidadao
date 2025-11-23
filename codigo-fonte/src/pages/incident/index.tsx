@@ -1,36 +1,62 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './style.css';
 
 const IncidentPage: React.FC = () => {
-  const { id } = useParams();
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const allIncidentes: Incident[] = JSON.parse(
+    localStorage.getItem('incidentes') || '[]',
+  );
+
+  const actualIncident = allIncidentes.find((incident) => {
+    return String(incident.id) === String(params.id);
+  });
+
+  if (!actualIncident) {
+    navigate('/');
+    return;
+  }
+
+  const { titulo, rua, bairro, cidade, estado, descricao, nome, dataCriacao } =
+    actualIncident;
+
+  console.log(actualIncident);
 
   return (
     <div className="container">
       <div className="mb-5">
-        <h1 className="text-xl text-rose-600 font-bold">Rua alagada</h1>
-        <p className="text-sm">&#x1F4CD; Rua universo (Santa Lucia)</p>
+        <h1 className="text-xl text-rose-600 font-bold">{titulo}</h1>
+        <p className="text-sm">
+          &#x1F4CD; {rua} ({bairro} - {cidade}, {estado})
+        </p>
       </div>
       <img
         src="https://cdn.folhape.com.br/img/pc/1100/1/dn_arquivo/2021/02/whatsapp-image-2021-02-26-at-075827.jpeg"
         alt=""
         className="incident-image"
       />
-      <p className=" py-5 px-10 mb-2">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s
-      </p>
+      <h3 className="pt-5 px-10">Descrição</h3>
+      <p className="py-3 px-10 mb-2">{descricao}</p>
 
       <div className="flex gap-3 justify-between">
-        <span>Cidadão: Isabella A.</span>
-        <span>Horário de alerta: 21h42</span>
-        <span>Atualizado em: 22h12</span>
+        <span>Cidadão: {nome}</span>
+        <span>Horário de alerta: {formatHourMinute(dataCriacao)}</span>
+        <span>Atualizado em: {formatHourMinute(dataCriacao)}</span>
       </div>
     </div>
   );
+};
+
+const formatHourMinute = (isoString: string) => {
+  const date = new Date(isoString);
+
+  date.setHours(date.getHours() - 3);
+
+  const hh = String(date.getHours()).padStart(2, '0');
+  const mm = String(date.getMinutes()).padStart(2, '0');
+
+  return `${hh}h${mm}`;
 };
 
 export default IncidentPage;

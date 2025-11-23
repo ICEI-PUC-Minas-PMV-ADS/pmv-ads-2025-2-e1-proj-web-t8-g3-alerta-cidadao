@@ -1,10 +1,15 @@
 interface Incident {
   id: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  Owner: string;
-  images?: string[];
-  location: string;
+  titulo: string;
+  bairro: string;
+  cidade: string;
+  dataCriacao: string;
+  descricao: string;
+  estado: string;
+  latitude: string;
+  longitude: string;
+  rua: string;
+  email: string;
+  telefone: string;
+  nome: string;
 }
