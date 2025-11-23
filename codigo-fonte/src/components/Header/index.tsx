@@ -46,7 +46,7 @@ const Header: React.FC = () => {
 
             <li>
               <Link
-                to="/report"
+                to="/map"
                 className="hover:text-yellow-400 transition-colors duration-200"
               >
                 Mapa

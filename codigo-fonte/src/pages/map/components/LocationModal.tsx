@@ -78,6 +78,16 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const incidentesExistentes = JSON.parse(localStorage.getItem('incidentes') || '[]');
+    const novoIncidente = {
+      id: Date.now(),
+      ...formData,
+      dataCriacao: new Date().toISOString()
+    };
+    incidentesExistentes.push(novoIncidente);
+    localStorage.setItem('incidentes', JSON.stringify(incidentesExistentes));
+
     console.log('Dados do formulário:', formData);
     alert('Formulário enviado com sucesso! Confira o console para ver os dados.');
     onClose();
