@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { X, MapPin, User, Phone, Mail, MessageSquare, MapPinned } from 'lucide-react';
+import {
+  X,
+  MapPin,
+  User,
+  Phone,
+  Mail,
+  MessageSquare,
+  MapPinned,
+} from 'lucide-react';
+import { getCurrentUser } from 'utils/auth';
 
 interface MarkerPosition {
   lat: number;
@@ -35,7 +44,12 @@ interface FormData {
   titulo: string;
 }
 
-const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPosition, address }) => {
+const LocationModal: React.FC<LocationModalProps> = ({
+  isOpen,
+  onClose,
+  markerPosition,
+  address,
+}) => {
   const [formData, setFormData] = useState<FormData>({
     latitude: '',
     longitude: '',
@@ -47,11 +61,13 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
     telefone: '',
     email: '',
     descricao: '',
-    titulo: ''
+    titulo: '',
   });
 
   useEffect(() => {
-    if (isOpen) {
+    const currentUser = getCurrentUser();
+
+    if (isOpen && currentUser && currentUser.name) {
       setFormData({
         latitude: markerPosition.lat.toFixed(6),
         longitude: markerPosition.lng.toFixed(6),
@@ -59,37 +75,43 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
         bairro: address?.bairro || '',
         cidade: address?.cidade || '',
         estado: address?.estado || '',
-        nome: '',
+        nome: currentUser.name,
         telefone: '',
-        email: '',
+        email: currentUser.email,
         descricao: '',
-        titulo: ''
+        titulo: '',
       });
     }
   }, [isOpen, markerPosition, address]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const incidentesExistentes = JSON.parse(localStorage.getItem('incidentes') || '[]');
+    const incidentesExistentes = JSON.parse(
+      localStorage.getItem('incidentes') || '[]',
+    );
     const novoIncidente = {
       id: Date.now(),
       ...formData,
-      dataCriacao: new Date().toISOString()
+      dataCriacao: new Date().toISOString(),
     };
     incidentesExistentes.push(novoIncidente);
     localStorage.setItem('incidentes', JSON.stringify(incidentesExistentes));
 
     console.log('Dados do formulário:', formData);
-    alert('Formulário enviado com sucesso! Confira o console para ver os dados.');
+    alert(
+      'Formulário enviado com sucesso! Confira o console para ver os dados.',
+    );
     onClose();
   };
 
@@ -120,7 +142,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
               <MapPinned className="w-5 h-5 text-blue-600" />
               Endereço do Incidente
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Rua */}
               <div className="md:col-span-2">
@@ -196,6 +218,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
               value={formData.nome}
               onChange={handleInputChange}
               required
+              disabled
               placeholder="Digite seu nome completo"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
             />
@@ -230,6 +253,7 @@ const LocationModal: React.FC<LocationModalProps> = ({ isOpen, onClose, markerPo
               value={formData.email}
               onChange={handleInputChange}
               required
+              disabled
               placeholder="seu@email.com"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
             />
