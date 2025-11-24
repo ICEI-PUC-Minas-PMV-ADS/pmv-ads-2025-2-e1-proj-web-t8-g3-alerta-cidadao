@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import './style.css';
+import { useEffect } from 'react';
 
 const IncidentPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,8 +14,13 @@ const IncidentPage: React.FC = () => {
     return String(incident.id) === String(params.id);
   });
 
+  useEffect(() => {
+    if (!actualIncident) {
+      navigate('/');
+    }
+  }, [actualIncident]);
+
   if (!actualIncident) {
-    navigate('/');
     return;
   }
 
