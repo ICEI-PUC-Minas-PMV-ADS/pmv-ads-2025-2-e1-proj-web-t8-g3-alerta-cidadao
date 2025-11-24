@@ -3,6 +3,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import useGeoLocation from './hooks/useGeoLocation';
 import FloatingButton from './components/FloatingButton';
 import LocationModal from './components/LocationModal';
+import { Link } from 'react-router-dom';
 
 interface MarkerPosition {
   lat: number;
@@ -19,20 +20,27 @@ interface Address {
 
 const MapComponent: React.FC = () => {
   const { location, error, loading } = useGeoLocation();
-  const GOOGLE_MAPS_API_KEY: string = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyB7YczKVyJ7XeL0csncpSRqnhLrmtiGEFM';
+  const GOOGLE_MAPS_API_KEY: string =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    'AIzaSyB7YczKVyJ7XeL0csncpSRqnhLrmtiGEFM';
+
+  const registeredIncidents: Incident[] = JSON.parse(
+    localStorage.getItem('incidentes') || '[]',
+  );
 
   const containerStyle: React.CSSProperties = {
     width: '100%',
-    height: '80vh'
+    height: '80vh',
   };
 
   const defaultCenter: MarkerPosition = {
     lat: -19.9167,
-    lng: -43.9345
+    lng: -43.9345,
   };
 
   const [center, setCenter] = useState<MarkerPosition>(defaultCenter);
-  const [markerPosition, setMarkerPosition] = useState<MarkerPosition>(defaultCenter);
+  const [markerPosition, setMarkerPosition] =
+    useState<MarkerPosition>(defaultCenter);
   const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [address, setAddress] = useState<Address | null>(null);
@@ -43,7 +51,7 @@ const MapComponent: React.FC = () => {
     setLoadingAddress(true);
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}&language=pt-BR`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}&language=pt-BR`,
       );
       const data = await response.json();
 
@@ -52,24 +60,33 @@ const MapComponent: React.FC = () => {
         const addressComponents = result.address_components;
 
         // Extrair componentes do endereço
-        const rua = addressComponents.find((c: any) => 
-          c.types.includes('route'))?.long_name || '';
-        
-        const bairro = addressComponents.find((c: any) => 
-          c.types.includes('sublocality') || c.types.includes('neighborhood'))?.long_name || '';
-        
-        const cidade = addressComponents.find((c: any) => 
-          c.types.includes('administrative_area_level_2'))?.long_name || '';
-        
-        const estado = addressComponents.find((c: any) => 
-          c.types.includes('administrative_area_level_1'))?.short_name || '';
+        const rua =
+          addressComponents.find((c: any) => c.types.includes('route'))
+            ?.long_name || '';
+
+        const bairro =
+          addressComponents.find(
+            (c: any) =>
+              c.types.includes('sublocality') ||
+              c.types.includes('neighborhood'),
+          )?.long_name || '';
+
+        const cidade =
+          addressComponents.find((c: any) =>
+            c.types.includes('administrative_area_level_2'),
+          )?.long_name || '';
+
+        const estado =
+          addressComponents.find((c: any) =>
+            c.types.includes('administrative_area_level_1'),
+          )?.short_name || '';
 
         setAddress({
           rua,
           bairro,
           cidade,
           estado,
-          formatted: result.formatted_address
+          formatted: result.formatted_address,
         });
       } else {
         setAddress(null);
@@ -86,11 +103,11 @@ const MapComponent: React.FC = () => {
     if (location) {
       const userLocation: MarkerPosition = {
         lat: location.latitude,
-        lng: location.longitude
+        lng: location.longitude,
       };
       setCenter(userLocation);
       setMarkerPosition(userLocation);
-      
+
       if (mapInstance) {
         mapInstance.panTo(userLocation);
       }
@@ -104,14 +121,17 @@ const MapComponent: React.FC = () => {
     }
   }, [markerPosition]);
 
-  const handleMapClick = useCallback((event: google.maps.MapMouseEvent): void => {
-    if (event.latLng) {
-      setMarkerPosition({
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng()
-      });
-    }
-  }, []);
+  const handleMapClick = useCallback(
+    (event: google.maps.MapMouseEvent): void => {
+      if (event.latLng) {
+        setMarkerPosition({
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng(),
+        });
+      }
+    },
+    [],
+  );
 
   const handleMapLoad = useCallback((map: google.maps.Map) => {
     setMapInstance(map);
@@ -137,15 +157,13 @@ const MapComponent: React.FC = () => {
     <div className="p-4">
       <div className="mb-4">
         <h1 className="text-2xl font-bold mb-2">Mapa Interativo</h1>
-        
+
         {loading && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-2">
-            <p className="text-blue-700">
-              🔍 Obtendo sua localização...
-            </p>
+            <p className="text-blue-700">🔍 Obtendo sua localização...</p>
           </div>
         )}
-        
+
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-2">
             <p className="text-red-700">
@@ -156,23 +174,21 @@ const MapComponent: React.FC = () => {
             </p>
           </div>
         )}
-        
+
         {location && (
           <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-2">
-            <p className="text-green-700">
-              ✓ Localização obtida com sucesso
-            </p>
+            <p className="text-green-700">✓ Localização obtida com sucesso</p>
             <p className="text-sm text-green-600">
               Precisão: ~{location.accuracy.toFixed(0)}m
             </p>
           </div>
         )}
-        
+
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
           <p className="text-gray-700 font-medium">
             💡 Dica: Clique no mapa para adicionar um marcador
           </p>
-          
+
           {markerPosition && (
             <div className="mt-2 text-sm text-gray-600">
               {loadingAddress && (
@@ -180,14 +196,32 @@ const MapComponent: React.FC = () => {
                   🔄 Buscando endereço...
                 </p>
               )}
-              
+
               {address && !loadingAddress && (
                 <div className="mt-3 p-3 bg-white rounded border border-gray-300">
-                  <p className="font-semibold text-gray-800 mb-1">📍 Endereço:</p>
-                  {address.rua && <p><strong>Rua:</strong> {address.rua}</p>}
-                  {address.bairro && <p><strong>Bairro:</strong> {address.bairro}</p>}
-                  {address.cidade && <p><strong>Cidade:</strong> {address.cidade}</p>}
-                  {address.estado && <p><strong>Estado:</strong> {address.estado}</p>}
+                  <p className="font-semibold text-gray-800 mb-1">
+                    📍 Endereço:
+                  </p>
+                  {address.rua && (
+                    <p>
+                      <strong>Rua:</strong> {address.rua}
+                    </p>
+                  )}
+                  {address.bairro && (
+                    <p>
+                      <strong>Bairro:</strong> {address.bairro}
+                    </p>
+                  )}
+                  {address.cidade && (
+                    <p>
+                      <strong>Cidade:</strong> {address.cidade}
+                    </p>
+                  )}
+                  {address.estado && (
+                    <p>
+                      <strong>Estado:</strong> {address.estado}
+                    </p>
+                  )}
                 </div>
               )}
             </div>
@@ -207,9 +241,7 @@ const MapComponent: React.FC = () => {
                 onClick={handleMapClick}
                 onLoad={handleMapLoad}
               >
-                <Marker 
-                  position={markerPosition}
-                />
+                <Marker position={markerPosition} />
               </GoogleMap>
             </LoadScript>
 
@@ -229,7 +261,29 @@ const MapComponent: React.FC = () => {
         )}
       </div>
 
-      <LocationModal 
+      <div className="pt-8">
+        <h2 className="text-2xl font-bold mb-2">Incidentes Cadastrados</h2>
+        <div>
+          {registeredIncidents.map((incident) => {
+            return (
+              <div className="flex rounded-xl shadow-md p-6 w-full justify-between">
+                <div>
+                  <h5>{incident.titulo}</h5>
+                  <p>Autor: {incident.nome}</p>
+                </div>
+                <Link
+                  className="px-5 rounded-full bg-[#ffd000] hover:bg-[#ffcd00]/90 transition font-semibold text-black flex items-center"
+                  to={`/incident/${incident.id}`}
+                >
+                  Detalhes
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <LocationModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         markerPosition={markerPosition}
