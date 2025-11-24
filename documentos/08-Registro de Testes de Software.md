@@ -9,7 +9,7 @@ Os resultados dos testes funcionais realizados na aplicação são descritos a s
 | Resultados obtidos                         | Carregamento da página de incidente sem erros      |
 | Responsável pela execução do caso de Teste | Eduardo Moreira                                    |
 
-![teste 01](img/resultadoTeste1.png)
+<img width="1920" height="939" alt="image" src="https://github.com/user-attachments/assets/43d6a686-0373-4cbd-ba1e-e99003d9523d" />
 
 | Caso de Teste                              | CT-2 - Carregamento incorreto da página de Incidente |
 | :----------------------------------------- | :--------------------------------------------------- |
@@ -21,5 +21,7 @@ Os resultados dos testes funcionais realizados na aplicação são descritos a s
 | Resultados obtidos                         | Novo incidente adicionado na listagem de incidentes cadastrados |
 | Responsável pela execução do caso de Teste | Eduardo Moreira                                                 |
 
-![teste 03.1](img/resultadoTeste3.png)
-![teste 03.2](img/resultadoTeste3-2.png)
+<img width="1920" height="976" alt="image" src="https://github.com/user-attachments/assets/aaaa661b-ec7f-4b18-a9ce-ef760cf78c82" />
+<img width="1920" height="976" alt="image" src="https://github.com/user-attachments/assets/ce4ad918-3c9a-4cd7-8be3-2399c51298d6" />
+
+
