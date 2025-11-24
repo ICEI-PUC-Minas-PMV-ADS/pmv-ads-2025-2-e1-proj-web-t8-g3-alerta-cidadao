@@ -2,13 +2,21 @@
 
 Os testes funcionais a serem realizados na aplicação são descritos a seguir.
 
-| Caso de Teste                              | CT-1 - Página de Incidente                          |
+| Caso de Teste                              | CT-1 - Carregamento correto da página de Incidente  |
 | :----------------------------------------- | :-------------------------------------------------- |
 | Requisitos Associados                      | RF-7                                                |
 | Objetivo do Teste                          | Validar carregamento correto da página de incidente |
 | Passos                                     | Abrir página de incidente e aguardar o carregamento |
 | Critérios de êxito                         | Carregamento da página de incidente sem erros       |
 | Responsável pela elaborar do caso de Teste | Eduardo Moreira                                     |
+
+| Caso de Teste                              | CT-2 - Carregamento incorreto da página de Incidente                       |
+| :----------------------------------------- | :------------------------------------------------------------------------- |
+| Requisitos Associados                      | RF-7                                                                       |
+| Objetivo do Teste                          | Validar carregamento incorreto da página de incidente                      |
+| Passos                                     | Abrir página de incidente com um id inválido e aguardar o redirecionamento |
+| Critérios de êxito                         | Redirecionamento para HomePage                                             |
+| Responsável pela elaborar do caso de Teste | Eduardo Moreira                                                            |
 
 > **Links Úteis**:
 >
